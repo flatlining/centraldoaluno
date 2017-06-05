@@ -15,9 +15,10 @@ import org.altbeacon.beacon.startup.RegionBootstrap;
 import java.util.UUID;
 
 public class CentralDoAlunoApplication extends Application implements BootstrapNotifier {
-    private static String TAG = CentralDoAlunoApplication.class.getSimpleName();
+    private static final String TAG = CentralDoAlunoApplication.class.getSimpleName();
 
     private RegionBootstrap regionBootstrap;
+    private BeaconManager beaconManager;
     private BackgroundPowerSaver backgroundPowerSaver;
 
     @Override
@@ -28,12 +29,12 @@ public class CentralDoAlunoApplication extends Application implements BootstrapN
 
         initializeValues();
 
-        backgroundPowerSaver = new BackgroundPowerSaver(this);
-
         BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
-        Region region = new Region("br.unisinos.ubicomp.boostrapRegion", null, null, null);
+        Region region = new Region("centralDoAluno", null, null, null);
         regionBootstrap = new RegionBootstrap(this, region);
+
+        backgroundPowerSaver = new BackgroundPowerSaver(this);
     }
 
     private void initializeValues() {
@@ -55,16 +56,16 @@ public class CentralDoAlunoApplication extends Application implements BootstrapN
 
     @Override
     public void didEnterRegion(Region region) {
-        Log.d(TAG, String.format("didEnterRegion(%1s)", region));
+        Log.d(TAG, String.format("didEnterRegion(%1s)", region.getUniqueId()));
     }
 
     @Override
     public void didExitRegion(Region region) {
-        Log.d(TAG, String.format("didExitRegion(%1s)", region));
+        Log.d(TAG, String.format("didExitRegion(%1s)", region.getUniqueId()));
     }
 
     @Override
     public void didDetermineStateForRegion(int i, Region region) {
-        Log.d(TAG, String.format("didDetermineStateForRegion(%1s, %2s)", i, region));
+        // irrelevant
     }
 }

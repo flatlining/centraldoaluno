@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 public class PreferencesAdapter {
+    private static final String TAG = PreferencesAdapter.class.getSimpleName();
+
     private Context context;
     private final SharedPreferences sharedPrefs;
 
