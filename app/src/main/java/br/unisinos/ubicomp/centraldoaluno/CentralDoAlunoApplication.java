@@ -68,6 +68,7 @@ public class CentralDoAlunoApplication extends Application implements BootstrapN
 
     private void createNotification() {
         Intent resultIntent = new Intent(this, MainActivity.class);
+        resultIntent.putExtra(MainActivity.EXTRA_REQUEST_TOKEN, true);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addParentStack(MainActivity.class);
         stackBuilder.addNextIntent(resultIntent);

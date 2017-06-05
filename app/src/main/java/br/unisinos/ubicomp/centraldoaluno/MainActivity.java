@@ -18,6 +18,8 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    public static final String EXTRA_REQUEST_TOKEN = "br.unisinos.ubicomp.centraldoaluno.REQUEST_TOKEN";
+
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
     private EditText nameEditText;
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 builder.show();
             }
         }
+
+        Log.d(TAG, EXTRA_REQUEST_TOKEN + " " + getIntent().getBooleanExtra(EXTRA_REQUEST_TOKEN, false));
 
         pa = PreferencesAdapter.getInstance(this);
         Log.d(TAG, String.format("User Name: %1s", pa.getUserName()));
