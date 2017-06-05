@@ -8,12 +8,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private static String TAG = MainActivity.class.getSimpleName();
 
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
+
+    private EditText nameEditText;
+
+    PreferencesAdapter pa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,30 @@ public class MainActivity extends AppCompatActivity {
                 builder.show();
             }
         }
+
+        pa = PreferencesAdapter.getInstance(this);
+        Log.d(TAG, String.format("User Name: %1s", pa.getUserName()));
+        Log.d(TAG, String.format("Device Id: %1s", pa.getDeviceId()));
+
+        nameEditText = (EditText) findViewById(R.id.nameEditText);
+        nameEditText.setText(pa.getUserName());
+        nameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                pa.setUserName(s.toString());
+                Log.d(TAG, String.format("User Name: %1s", pa.getUserName()));
+            }
+        });
     }
 
     @Override

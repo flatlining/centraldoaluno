@@ -3,7 +3,6 @@ package br.unisinos.ubicomp.centraldoaluno;
 import android.app.Application;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.util.UUID;
 
@@ -34,8 +33,5 @@ public class CentralApplication extends Application {
         if (pa.getDeviceId() == null || pa.getDeviceId().isEmpty()) {
             pa.setDeviceId(deviceId);
         }
-
-        Log.d(TAG, String.format("User Name: %1s", pa.getUserName()));
-        Log.d(TAG, String.format("Device Id: %1s", pa.getDeviceId()));
     }
 }
