@@ -11,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private static String TAG = MainActivity.class.getSimpleName();
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
     private EditText nameEditText;
+    private TextView tokenTextView;
+    private Button cancelTokenButton;
 
     PreferencesAdapter pa;
 
@@ -49,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, String.format("Device Id: %1s", pa.getDeviceId()));
 
         nameEditText = (EditText) findViewById(R.id.nameEditText);
+        tokenTextView = (TextView) findViewById(R.id.tokenTextView);
+        cancelTokenButton = (Button) findViewById(R.id.cancelTokenButton);
+
         nameEditText.setText(pa.getUserName());
         nameEditText.addTextChangedListener(new TextWatcher() {
             @Override
