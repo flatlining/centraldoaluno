@@ -5,4 +5,6 @@
     <string name="limited_functionality_title">Functionality limited</string>
     <string name="limited_functionality_body">Since location access has not been granted, this app will not be able to discover beacons when in the background</string>
     <string name="name">Name</string>
+    <string name="empty_token">---</string>
+    <string name="cancel_token">Cancel Token</string>
 </resources>
