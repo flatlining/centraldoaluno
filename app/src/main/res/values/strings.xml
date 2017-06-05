@@ -7,4 +7,6 @@
     <string name="name">Name</string>
     <string name="empty_token">---</string>
     <string name="cancel_token">Cancel Token</string>
+    <string name="get_token_notification">You are at Central do Aluno, request a token and wait!!</string>
+    <string name="request_token">Request Token</string>
 </resources>

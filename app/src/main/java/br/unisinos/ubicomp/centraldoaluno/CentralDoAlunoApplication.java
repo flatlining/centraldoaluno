@@ -40,7 +40,7 @@ public class CentralDoAlunoApplication extends Application implements BootstrapN
         Region region = new Region("centralDoAluno", null, null, null);
         regionBootstrap = new RegionBootstrap(this, region);
 
-        backgroundPowerSaver = new BackgroundPowerSaver(this);
+        //backgroundPowerSaver = new BackgroundPowerSaver(this);
     }
 
     private void initializeValues() {
@@ -67,24 +67,19 @@ public class CentralDoAlunoApplication extends Application implements BootstrapN
     }
 
     private void createNotification() {
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(android.R.drawable.stat_notify_sync)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!");
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(this, MainActivity.class);
-        // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(MainActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(resultPendingIntent);
+                        .setContentTitle(getText(R.string.app_name))
+                        .setContentText(getString(R.string.get_token_notification))
+                        .setAutoCancel(true)
+                        .addAction(android.R.drawable.stat_notify_sync, getString(R.string.request_token), stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT));
+
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
         mNotificationManager.notify(0, mBuilder.build());
