@@ -2,4 +2,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference android:key="pref_userName" />
     <EditTextPreference android:key="pref_deviceId" />
+    <EditTextPreference android:key="pref_token" />
 </PreferenceScreen>

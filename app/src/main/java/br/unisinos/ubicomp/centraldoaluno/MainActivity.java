@@ -16,17 +16,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
-
     public static final String EXTRA_REQUEST_TOKEN = "br.unisinos.ubicomp.centraldoaluno.REQUEST_TOKEN";
-
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
-
+    PreferencesAdapter pa;
     private EditText nameEditText;
     private TextView tokenTextView;
     private Button cancelTokenButton;
-
-    PreferencesAdapter pa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        Log.d(TAG, EXTRA_REQUEST_TOKEN + " " + getIntent().getBooleanExtra(EXTRA_REQUEST_TOKEN, false));
+        if (getIntent().getBooleanExtra(EXTRA_REQUEST_TOKEN, false)) {
+            requestToken();
+        }
 
         pa = PreferencesAdapter.getInstance(this);
         Log.d(TAG, String.format("User Name: %1s", pa.getUserName()));
@@ -80,10 +78,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void requestToken() {
+        Log.d(TAG, "Request Token!");
+        Integer minimum = 1;
+        Integer maximum = 10;
+        Integer randomNum = minimum + (int) (Math.random() * maximum);
+
+        PreferencesAdapter.getInstance(this).setToken(randomNum.toString());
+        Log.d(TAG, String.format("Token %1s", PreferencesAdapter.getInstance(this).getToekn()));
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         switch (requestCode) {
             case PERMISSION_REQUEST_COARSE_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {

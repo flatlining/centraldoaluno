@@ -13,6 +13,7 @@ import android.util.Log;
 
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
 import org.altbeacon.beacon.startup.BootstrapNotifier;
@@ -35,9 +36,10 @@ public class CentralDoAlunoApplication extends Application implements BootstrapN
 
         initializeValues();
 
+        //BeaconManager.setDebug(BuildConfig.DEBUG);
         BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
-        Region region = new Region("centralDoAluno", null, null, null);
+        Region region = new Region("centralDoAluno", Identifier.parse("64657665-6c6f-7064-6279-6d656e766961"), Identifier.fromInt(1), Identifier.fromInt(1));
         regionBootstrap = new RegionBootstrap(this, region);
 
         //backgroundPowerSaver = new BackgroundPowerSaver(this);
