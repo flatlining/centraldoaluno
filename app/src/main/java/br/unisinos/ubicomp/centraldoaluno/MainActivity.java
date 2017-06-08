@@ -2,9 +2,11 @@ package br.unisinos.ubicomp.centraldoaluno;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String EXTRA_REQUEST_TOKEN = "br.unisinos.ubicomp.centraldoaluno.REQUEST_TOKEN";
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
@@ -76,6 +78,14 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, String.format("User Name: %1s", pa.getUserName()));
             }
         });
+
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tokenTextView.setText(PreferencesAdapter.getInstance(this).getToekn());
     }
 
     private void requestToken() {
@@ -107,6 +117,14 @@ public class MainActivity extends AppCompatActivity {
                     builder.show();
                 }
             }
+        }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(PreferencesAdapter.PREF_TOKEN)) {
+            Log.d(TAG, String.format("Key: %1s", PreferencesAdapter.getInstance(this).getToekn()));
+            tokenTextView.setText(PreferencesAdapter.getInstance(this).getToekn());
         }
     }
 }
