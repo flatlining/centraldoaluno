@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -79,13 +80,30 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
         });
 
-        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+        cancelTokenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PreferencesAdapter.getInstance(v.getContext()).clearToken();
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         tokenTextView.setText(PreferencesAdapter.getInstance(this).getToekn());
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+        setCancelButtonState();
+    }
+
+    private void setCancelButtonState() {
+        cancelTokenButton.setEnabled(!PreferencesAdapter.getInstance(this).getToekn().equals(getText(R.string.null_token)));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
 
     private void requestToken() {
@@ -125,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (key.equals(PreferencesAdapter.PREF_TOKEN)) {
             Log.d(TAG, String.format("Key: %1s", PreferencesAdapter.getInstance(this).getToekn()));
             tokenTextView.setText(PreferencesAdapter.getInstance(this).getToekn());
+            setCancelButtonState();
         }
     }
 }

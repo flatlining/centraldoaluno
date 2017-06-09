@@ -92,6 +92,7 @@ public class CentralDoAlunoApplication extends Application implements BootstrapN
     @Override
     public void didExitRegion(Region region) {
         Log.d(TAG, String.format("didExitRegion(%1s)", region.getUniqueId()));
+        PreferencesAdapter.getInstance(this).clearToken();
     }
 
     @Override

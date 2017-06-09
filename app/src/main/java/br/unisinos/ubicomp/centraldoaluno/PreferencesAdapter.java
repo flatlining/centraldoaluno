@@ -50,6 +50,10 @@ public class PreferencesAdapter {
         sharedPrefs.edit().putString(PREF_TOKEN, token).apply();
     }
 
+    public void clearToken() {
+        sharedPrefs.edit().putString(PREF_TOKEN, context.getText(R.string.null_token).toString()).apply();
+    }
+
     public void clear() {
         sharedPrefs.edit().clear().apply();
     }

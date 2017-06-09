@@ -30,7 +30,7 @@
         android:ems="3"
         android:gravity="center"
         android:lines="1"
-        android:text="@string/empty_token"
+        android:text="@string/null_token"
         android:textSize="96sp" />
 
     <Button
